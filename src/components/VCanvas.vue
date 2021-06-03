@@ -1,58 +1,85 @@
 <template>
     <div>
-        <canvas :id="canvasId" class="canvas-style" v-on:mousedown="mouseMove"
-        />
+        <canvas :id="canvasId" class="canvas-style">
+        </canvas>
+        <div class="button" @click="addNew">ADD</div>
     </div>
 </template>
 
 <script>
     const paper = require('paper');
     export default {
+      components: {
+      },
         props: ['canvasId'],
         data: () => ({
             path: null,
             scope: null,
-            newCircle: null
+            newCircle: null,
+            newRect: null
         }),
         methods: {
             circleCreate(scope) {
                 scope.activate();
                 const myCircle = new paper.Path.Circle(new paper.Point(100, 70), 50);
                 myCircle.fillColor = 'black'
+                let self = this;
+                myCircle.onMouseDrag = (event) => {
+                self.path = this.newCircle
+                self.path.selected = true
+                self.path.position = event.point
+              }
+                myCircle.onMouseUp = () => {
+                  self.path.selected = false
+                }
                 return this.newCircle =  myCircle
             },
-            /* rectangleCreate(scope) {
+            rectangleCreate(scope) {
               scope.activate();
               const myRectangle = new paper.Rectangle(new paper.Point(450, 350), new paper.Point(150, 100))
               const myPath = new paper.Path.Rectangle(myRectangle)
               myPath.fillColor = 'black'
-              return myPath
-            }, */
-            createTool(scope) {
-              scope.activate();
-              return new paper.Tool();
+              let self = this;
+                myPath.onMouseDrag = (event) => {
+                self.path = this.newRect
+                self.path.selected = true
+                self.path.position = event.point
+              }
+              myPath.onMouseUp = () => {
+                  self.path.selected = false
+                }
+              return this.newRect = myPath
             },
-            mouseMove() {
+            addNew() {
+              this.scope = new paper.PaperScope();
+            this.scope.setup(this.canvasId);
+            this.circleCreate(this.scope)
+            }
+            /* mouseMove() {
               let self = this;
               this.tool = this.createTool(this.scope);
               this.tool.onMouseDrag = (event) => {
                 self.path = this.newCircle
+                self.path.selected = true
                 self.path.position = event.point
               }
-            }
+              this.tool.onMouseUp = () => {
+                self.path.selected = false
+              }
+            } */
         },
         mounted() {
             this.scope = new paper.PaperScope();
             this.scope.setup(this.canvasId);
             this.circleCreate(this.scope)
-            //this.rectangleCreate(this.scope)
+            this.rectangleCreate(this.scope)
         }
     }
 </script>
 
 <style scoped>
     .canvas-style {
-        cursor: crosshair;
+        cursor: pointer;
         width: 100% !important;
         height: 500px !important;
         border: 5px solid black;
@@ -60,5 +87,9 @@
         display: block;
         margin: auto;
         box-shadow: 0 10px 8px -8px black;
+    }
+    .button {
+      border: 1px solid black;
+      cursor: pointer;
     }
 </style>
