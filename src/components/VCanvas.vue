@@ -2,7 +2,8 @@
     <div>
         <canvas :id="canvasId" class="canvas-style">
         </canvas>
-        <div class="button" @click="addNew">ADD</div>
+        <div class="button" @click="addCircle">ADD CIRCLE</div>
+        <div class="button" @click="addRectangle">ADD RECTANGLE</div>
     </div>
 </template>
 
@@ -15,45 +16,38 @@
         data: () => ({
             path: null,
             scope: null,
-            newCircle: null,
-            newRect: null
         }),
         methods: {
-            circleCreate(scope) {
-                scope.activate();
+            circleCreate() {
                 const myCircle = new paper.Path.Circle(new paper.Point(100, 70), 50);
                 myCircle.fillColor = 'black'
-                let self = this;
                 myCircle.onMouseDrag = (event) => {
-                self.path = this.newCircle
-                self.path.selected = true
-                self.path.position = event.point
+                myCircle.selected = true
+                myCircle.position = event.point
               }
                 myCircle.onMouseUp = () => {
-                  self.path.selected = false
+                  myCircle.selected = false
                 }
-                return this.newCircle =  myCircle
+                return myCircle
             },
-            rectangleCreate(scope) {
-              scope.activate();
+            rectangleCreate() {
               const myRectangle = new paper.Rectangle(new paper.Point(450, 350), new paper.Point(150, 100))
               const myPath = new paper.Path.Rectangle(myRectangle)
               myPath.fillColor = 'black'
-              let self = this;
                 myPath.onMouseDrag = (event) => {
-                self.path = this.newRect
-                self.path.selected = true
-                self.path.position = event.point
+                myPath.selected = true
+                myPath.position = event.point
               }
               myPath.onMouseUp = () => {
-                  self.path.selected = false
+                  myPath.selected = false
                 }
-              return this.newRect = myPath
+              return myPath
             },
-            addNew() {
-              this.scope = new paper.PaperScope();
-            this.scope.setup(this.canvasId);
-            this.circleCreate(this.scope)
+            addCircle() {
+              this.circleCreate()
+            },
+            addRectangle() {
+              this.rectangleCreate()
             }
             /* mouseMove() {
               let self = this;
