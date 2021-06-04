@@ -2,8 +2,13 @@
     <div>
         <canvas :id="canvasId" class="canvas-style">
         </canvas>
-        <div class="button" @click="addCircle">ADD CIRCLE</div>
-        <div class="button" @click="addRectangle">ADD RECTANGLE</div>
+        <div class="button" @click="circleCreate">ADD CIRCLE</div>
+        <div class="button" @click="rectangleCreate">ADD RECTANGLE</div>
+        <div class="button" @click="triangleCreate">ADD TRIANGLE</div>
+        <div class="button" @click="starCreate">ADD STAR</div>
+        <ul v-for="item in figures" :key="item.id" :item="item">
+          <li>{{item.id}}<button @click="removeFigure(item, item.id)"></button></li>
+        </ul>
     </div>
 </template>
 
@@ -16,38 +21,66 @@
         data: () => ({
             path: null,
             scope: null,
+            figures: []
         }),
         methods: {
             circleCreate() {
                 const myCircle = new paper.Path.Circle(new paper.Point(100, 70), 50);
                 myCircle.fillColor = 'black'
-                myCircle.onMouseDrag = (event) => {
+                myCircle.onMouseDrag = (event) => this.mouseDrag(myCircle, event)
+                myCircle.onMouseUp = () => this.mouseUp(myCircle)
+                /* myCircle.onMouseDrag = (event) => {
                 myCircle.selected = true
                 myCircle.position = event.point
-              }
-                myCircle.onMouseUp = () => {
+              } */
+                /* myCircle.onMouseUp = () => {
                   myCircle.selected = false
-                }
+                } */
+                myCircle.date = new Date()
+                this.figures.push(myCircle)
                 return myCircle
             },
             rectangleCreate() {
               const myRectangle = new paper.Rectangle(new paper.Point(450, 350), new paper.Point(150, 100))
               const myPath = new paper.Path.Rectangle(myRectangle)
-              myPath.fillColor = 'black'
-                myPath.onMouseDrag = (event) => {
-                myPath.selected = true
-                myPath.position = event.point
-              }
-              myPath.onMouseUp = () => {
-                  myPath.selected = false
-                }
+              myPath.fillColor = 'blue'
+              myPath.onMouseDrag = (event) => this.mouseDrag(myPath, event)
+              myPath.onMouseUp = () => this.mouseUp(myPath)
+              this.figures.push(myPath)
               return myPath
             },
-            addCircle() {
-              this.circleCreate()
+            triangleCreate() {
+              const myTriangle = new paper.Path.RegularPolygon(new paper.Point(80, 70), 3, 50)
+              myTriangle.fillColor = 'yellow'
+              myTriangle.onMouseDrag = (event) => this.mouseDrag(myTriangle, event)
+              myTriangle.onMouseUp = () => this.mouseUp(myTriangle)
+              this.figures.push(myTriangle)
+              return myTriangle
             },
-            addRectangle() {
-              this.rectangleCreate()
+            starCreate() {
+              const newStar = new paper.Path.Star({
+                center: [50, 50],
+                points: 5,
+                radius1: 20,
+                radius2: 50,
+                fillColor: 'red',
+              })
+              newStar.rotate(35)
+              newStar.onMouseDrag = (event) => this.mouseDrag(newStar, event)
+              newStar.onMouseUp = () => this.mouseUp(newStar)
+              this.figures.push(newStar)
+              return newStar
+            },
+            mouseDrag(el, event) {
+              el.selected = true;
+              el.position = event.point
+            },
+            mouseUp(el) {
+              el.selected = false
+            },
+            removeFigure(item, id) {
+              item.remove()
+              this.figures = this.figures.filter(item => item.id !== id)
             }
             /* mouseMove() {
               let self = this;
@@ -66,7 +99,6 @@
             this.scope = new paper.PaperScope();
             this.scope.setup(this.canvasId);
             this.circleCreate(this.scope)
-            this.rectangleCreate(this.scope)
         }
     }
 </script>
