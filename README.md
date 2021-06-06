@@ -1,24 +1,17 @@
 # svg-editor
+Простой SVG-редактор, в котором можно передвигать геометрические фигуры   
+Доступно по ссылке: https://romanxlee.github.io/svg-editor/
 
-## Project setup
-```
-npm install
-```
+# Функционал:    
+Добавление, удаление, перемещение фигур.   
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+# Использованые технлогии:   
+Vue, Paper.js
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## Установка   
+1. Скопируйте репозиторий  `git clone https://github.com/romanxlee/svg-editor.git`
+2. Установите зависимости `npm install`
+3. Для сборки используйте:   
+`npm run serve` во время разработки   
+`npm run build` для запуска в продакшн   
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
