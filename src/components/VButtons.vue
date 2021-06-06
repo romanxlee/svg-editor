@@ -1,13 +1,15 @@
 <template>
-  <div class="buttons-container">
-        <div
-          v-for="item in buttons"
-          :key="item"
-          @click="$emit('buttonClick', item)"
-          class="button">
-            Добавить {{item}}
-        </div>
+  <div class="buttons">
+    <div
+      v-for="item in buttons"
+      :key="item.i"
+      class="buttons__item"
+    >
+      <img class="buttons__image" :src="item.image" alt="Фигура">
+      {{item.type}}
+      <button @click="$emit('buttonClick', item.type)">Добавить</button>
     </div>
+  </div>
 </template>
 
 <script>
@@ -19,8 +21,17 @@ export default {
 </script>
 
 <style>
-.button {
+.buttons__item {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  align-items: center;
   border: 1px solid black;
   cursor: pointer;
+}
+
+.buttons__image {
+  width: 20px;
+  height: 20px;
 }
 </style>

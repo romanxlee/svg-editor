@@ -24,7 +24,24 @@ export default {
   data: () => ({
     scope: null,
     figures: [],
-    buttons: ['Круг', 'Прямоугольник', 'Треугольник', 'Звезда']
+    buttons: [
+      {
+        type: 'Круг',
+        image: require('@/assets/circle.svg')
+      },
+      {
+        type: 'Прямоугольник',
+        image: require('@/assets/rectangle.svg')
+      },
+      {
+        type: 'Треугольник',
+        image: require('@/assets/triangle.svg')
+      },
+      {
+        type: 'Звезда',
+        image: require('@/assets/star.svg')
+      }
+    ]
   }),
   components: {
     Log,
@@ -119,7 +136,7 @@ export default {
 .canvas {
     cursor: pointer;
     width: 70% !important;
-    height: 500px !important;
+    height: 700px !important;
     border: 5px solid black;
     border-radius: 10px;
     display: block;

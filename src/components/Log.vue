@@ -1,22 +1,22 @@
 <template>
   <div class="log">
-      <div
+    <div
       v-for="item in data"
       :key="item.id"
       class="log__item"
-      >
-        <p class="log__text">
-          ID: {{item.id}},
-        </p>
-        <p class="log__text">
-          Создан в: {{item.date}},
-        </p>
-        <p class="log__text">
-          Тип: {{item.description}}
-        </p>
-        <button class="button button_remove" @click="$emit('buttonClick', item, item.id)">Удалить</button>
-      </div>
+    >
+      <p class="log__text">
+        ID: {{item.id}},
+      </p>
+      <p class="log__text">
+        Создан в: {{item.date}},
+      </p>
+      <p class="log__text">
+        Тип: {{item.description}}
+      </p>
+      <button class="button button_remove" @click="$emit('buttonClick', item, item.id)">Удалить</button>
     </div>
+  </div>
 </template>
 
 <script>
@@ -30,7 +30,7 @@ export default {
 <style>
 .log {
   width: 15%;
-  max-height: 500px;
+  max-height: 700px;
   border: 1px solid black;
   overflow-y: auto;
 }
