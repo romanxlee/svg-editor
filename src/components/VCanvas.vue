@@ -1,14 +1,11 @@
 <template>
   <div class="container">
-    <div class="buttons-container">
-        <div class="button" @click="circleCreate">Добавить Круг</div>
-        <div class="button" @click="rectangleCreate">Добавить Прямоугольник</div>
-        <div class="button" @click="triangleCreate">Добавить Треугольник</div>
-        <div class="button" @click="starCreate">Добавить Звезду</div>
-    </div>
+    <VButtons
+      :buttons="buttons"
+      @buttonClick="createFigure"
+    />
 
-    <canvas :id="canvasId" class="canvas">
-    </canvas>
+    <canvas :id="canvasId" class="canvas"></canvas>
 
     <Log
       :data="figures"
@@ -18,6 +15,7 @@
 </template>
 
 <script>
+import VButtons from '@/components/VButtons';
 import Log from '@/components/Log';
 const paper = require('paper');
 
@@ -26,9 +24,11 @@ export default {
   data: () => ({
     scope: null,
     figures: [],
+    buttons: ['Круг', 'Прямоугольник', 'Треугольник', 'Звезда']
   }),
   components: {
-    Log
+    Log,
+    VButtons
   },
   methods: {
     circleCreate() {
@@ -88,6 +88,17 @@ export default {
     removeFigure(item, id) {
       item.remove()
       this.figures = this.figures.filter(item => item.id !== id)
+    },
+    createFigure(figure) {
+      if (figure === 'Круг') {
+        this.circleCreate()
+      } else if (figure === 'Прямоугольник') {
+        this.rectangleCreate()
+      } else if (figure === 'Треугольник') {
+        this.triangleCreate()
+      } else if (figure === 'Звезда') {
+        this.starCreate()
+      }
     }
   },
   mounted() {
@@ -107,15 +118,10 @@ export default {
 
 .canvas {
     cursor: pointer;
-    width: 80% !important;
+    width: 70% !important;
     height: 500px !important;
     border: 5px solid black;
     border-radius: 10px;
     display: block;
-}
-
-.button {
-  border: 1px solid black;
-  cursor: pointer;
 }
 </style>
