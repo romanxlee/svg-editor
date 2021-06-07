@@ -14,7 +14,7 @@
       <p class="log__text">
         Тип: {{item.description}}
       </p>
-      <button class="button button_remove" @click="$emit('buttonClick', item, item.id)">Удалить</button>
+      <button class="button" @click="$emit('buttonClick', item, item.id)">Удалить</button>
     </div>
   </div>
 </template>
