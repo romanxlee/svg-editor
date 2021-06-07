@@ -7,7 +7,7 @@
     >
       <img class="buttons__image" :src="item.image" alt="Фигура">
       {{item.type}}
-      <button @click="$emit('buttonClick', item.type)">Добавить</button>
+      <button class="button" @click="$emit('buttonClick', item.type)">Добавить</button>
     </div>
   </div>
 </template>
@@ -21,17 +21,22 @@ export default {
 </script>
 
 <style>
+
 .buttons__item {
   display: flex;
+  gap: 5px;
   flex-direction: column;
   padding: 10px;
   align-items: center;
   border: 1px solid black;
-  cursor: pointer;
 }
 
 .buttons__image {
   width: 20px;
   height: 20px;
+}
+
+.button {
+  cursor: pointer;
 }
 </style>
