@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <VCanvas :canvas-id="'canvas-one'" ref="childCanvas"/>
+    <button id="link" @click="saveImage">SAVE</button>
   </div>
 </template>
 
@@ -13,7 +14,14 @@ export default {
     VCanvas
   },
   data: () => ({
-  })
+  }),
+  methods: {
+    saveImage() {
+        const canvas = document.getElementById('canvas-one');
+        const data = canvas.toDataURL('image/png').replace("image/png", "image/octet-stream");
+        window.open(data)
+    }
+  }
 }
 </script>
 
